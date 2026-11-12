@@ -7,7 +7,7 @@ the reason it cannot exist. CI checks that every published adapter has a row ent
 |---|---|---|---|
 | Event | First slice: Join / Leave / Chat | Planned: needs the `ServerPlayer` identity surface and the mutable-string setter | Not available: the self-hosted surface has no game event source |
 | Command | Planned | Planned: the surface has no command executor | Planned |
-| Async | Later | Later | Later |
+| Async | Planned: server-thread `SynchronizationContext` over `Scheduler.runTask` | Planned: over `ServerThreadExecutor.getDefault()` | Not available: no general tick hook |
 | UI | Later | Later | Later |
 
 An unavailable capability throws `CarrierCapabilityUnavailableException` from its entry point
