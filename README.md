@@ -1,5 +1,7 @@
 # Hosihikari Projection — capability extensions
 
+[English](README.md) | [简体中文](README.zh_hans.md)
+
 Carrier-neutral capabilities for plugin authors. A plugin is written once against a
 `Hosihikari.Extension.*` contract and does not name the carrier it runs on; the binding
 surfaces stay per-carrier (Design ADR-0002), and this layer flattens the capabilities
@@ -17,9 +19,8 @@ above them (Design ADR-0028).
 
 `Abstractions` and `Event` are shared-layer assemblies: the framework bus dispatches by
 `typeof(TEvent)`, so every plugin must see the same event type. The carrier declares them and
-the publisher is a process-wide component; its host (a carrier host service) is still under
-the framework v2 review, so the publisher's entry points stay host-neutral
-(`Start(IEventBus)` / `Stop()`). Plugins only subscribe through `IPluginContext.Events`.
+the publisher runs as a process-wide carrier component (framework ADR-0061); plugins only
+subscribe through `IPluginContext.Events`.
 
 Contract packages follow their own SemVer; adapters stay in lock-step with the Idiomatic
 package of the carrier they adapt.
