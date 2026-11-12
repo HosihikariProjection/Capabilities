@@ -10,6 +10,8 @@ above them (Design ADR-0028).
 | `Hosihikari.Extension.Abstractions` | Shared contracts (`IPlayerView`, …) | 0.1.0 |
 | `Hosihikari.Extension.Event` | Event catalog and the event extension | 0.1.0 |
 | `Hosihikari.Extension.Event.Endstone` | Endstone adapter | follows the Endstone Idiomatic version |
+| `Hosihikari.Extension.Hook` | Hook capability (escape hatch) | 0.1.0 |
+| `Hosihikari.Extension.Hook.LeviLamina` | LeviLamina hook adapter | follows the LeviLamina Idiomatic version |
 
 `Abstractions` and `Event` are shared-layer assemblies: the framework bus dispatches by
 `typeof(TEvent)`, so every plugin must see the same event type. The carrier declares them and
@@ -23,5 +25,6 @@ package of the carrier they adapt.
 ## Status
 
 The contracts and the event catalog are the first slice. The Endstone publisher follows once
-its event surface is wrapped in `Hosihikari.Binding.Endstone`. See
-[docs/capability-matrix.md](docs/capability-matrix.md).
+its event surface is wrapped in `Hosihikari.Binding.Endstone`. The hook capability is an escape
+hatch: the LeviLamina adapter is available, while Endstone and self-hosted wait for a detour
+engine. See [docs/capability-matrix.md](docs/capability-matrix.md).

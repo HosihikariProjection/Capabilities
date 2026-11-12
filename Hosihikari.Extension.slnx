@@ -2,5 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Hosihikari.Extension.Abstractions/Hosihikari.Extension.Abstractions.csproj" />
     <Project Path="src/Hosihikari.Extension.Event/Hosihikari.Extension.Event.csproj" />
+    <Project Path="src/Hosihikari.Extension.Hook/Hosihikari.Extension.Hook.csproj" />
+    <Project Path="src/Hosihikari.Extension.Hook.LeviLamina/Hosihikari.Extension.Hook.LeviLamina.csproj" />
   </Folder>
 </Solution>
