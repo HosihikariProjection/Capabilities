@@ -12,8 +12,10 @@ above them (Design ADR-0028).
 | `Hosihikari.Extension.Event.Endstone` | Endstone adapter | follows the Endstone Idiomatic version |
 
 `Abstractions` and `Event` are shared-layer assemblies: the framework bus dispatches by
-`typeof(TEvent)`, so every plugin must see the same event type. The carrier package declares
-them and hosts the publisher; plugins only subscribe through `IPluginContext.Events`.
+`typeof(TEvent)`, so every plugin must see the same event type. The carrier declares them and
+the publisher is a process-wide component; its host (a carrier host service) is still under
+the framework v2 review, so the publisher's entry points stay host-neutral
+(`Start(IEventBus)` / `Stop()`). Plugins only subscribe through `IPluginContext.Events`.
 
 Contract packages follow their own SemVer; adapters stay in lock-step with the Idiomatic
 package of the carrier they adapt.
