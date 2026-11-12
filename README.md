@@ -10,8 +10,10 @@ above them (Design ADR-0028).
 | `Hosihikari.Extension.Abstractions` | Shared contracts (`IPlayerView`, …) | 0.1.0 |
 | `Hosihikari.Extension.Event` | Event catalog and the event extension | 0.1.0 |
 | `Hosihikari.Extension.Event.Endstone` | Endstone adapter | follows the Endstone Idiomatic version |
-| `Hosihikari.Extension.Hook` | Hook capability (escape hatch) | 0.1.0 |
+| `Hosihikari.Extension.Hook` | Hook capability (Paper-style runtime hooking) | 0.1.0 |
 | `Hosihikari.Extension.Hook.LeviLamina` | LeviLamina hook adapter | follows the LeviLamina Idiomatic version |
+| `Hosihikari.Extension.UI` | UI capability (forms) | 0.1.0 |
+| `Hosihikari.Extension.UI.Endstone` | Endstone form adapter | follows the Endstone Idiomatic version |
 
 `Abstractions` and `Event` are shared-layer assemblies: the framework bus dispatches by
 `typeof(TEvent)`, so every plugin must see the same event type. The carrier declares them and
@@ -28,4 +30,6 @@ The contracts and the event catalog are the first slice. The Endstone publisher 
 its event surface is wrapped in `Hosihikari.Binding.Endstone`. The hook capability is the
 native analogue of Paper's asm-utils: the mechanism is portable, the targets are carrier- and
 version-specific. The LeviLamina adapter is available; Endstone and self-hosted wait for a
-detour engine. See [docs/capability-matrix.md](docs/capability-matrix.md).
+detour engine. UI starts with action forms on Endstone; message and modal forms need
+factories, and the other carriers would build form JSON over the packet surface. See
+[docs/capability-matrix.md](docs/capability-matrix.md).

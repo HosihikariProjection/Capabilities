@@ -9,7 +9,7 @@ the reason it cannot exist. CI checks that every published adapter has a row ent
 | Command | Planned | Planned: the surface has no command executor | Planned |
 | Async | Planned: server-thread `SynchronizationContext` over `Scheduler.runTask` | Planned: over `ServerThreadExecutor.getDefault()` | Not available: no general tick hook |
 | Hook | Deferred: the runtime's hook is internal, so a detour engine would be needed | Available: wrapped over `ll::memory::hook` / `unhook`; targets are carrier- and version-specific | Deferred: needs a detour engine and a tick target |
-| UI | Later | Later | Later |
+| UI | Available: action forms; message/modal forms need factories | Planned: would build form JSON over the Bedrock packet surface | Planned: same packet path |
 
 An unavailable capability throws `CarrierCapabilityUnavailableException` from its entry point
 and reports `IsAvailable = false`; it never degrades silently.

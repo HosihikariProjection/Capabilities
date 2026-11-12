@@ -4,5 +4,7 @@
     <Project Path="src/Hosihikari.Extension.Event/Hosihikari.Extension.Event.csproj" />
     <Project Path="src/Hosihikari.Extension.Hook/Hosihikari.Extension.Hook.csproj" />
     <Project Path="src/Hosihikari.Extension.Hook.LeviLamina/Hosihikari.Extension.Hook.LeviLamina.csproj" />
+    <Project Path="src/Hosihikari.Extension.UI/Hosihikari.Extension.UI.csproj" />
+    <Project Path="src/Hosihikari.Extension.UI.Endstone/Hosihikari.Extension.UI.Endstone.csproj" />
   </Folder>
 </Solution>

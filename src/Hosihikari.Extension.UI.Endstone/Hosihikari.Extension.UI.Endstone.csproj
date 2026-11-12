@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- The adapter registers itself when the contract loads its assembly; that is the
+         selection mechanism, not an application startup hook. -->
+    <NoWarn>$(NoWarn);CS1591;CA2255</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Hosihikari.Extension.UI.Endstone</PackageId>
+    <Version>0.11.15-r0</Version>
+    <Authors>Hosihikari</Authors>
+    <Description>Endstone adapter for the UI capability.</Description>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/HosihikariProjection/BindingExtensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>minecraft;bedrock;bds;hosihikari;extension;ui;endstone</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Hosihikari.Extension.UI/Hosihikari.Extension.UI.csproj" />
+    <ProjectReference Include="$(EndstoneIdiomaticProjectPath)"
+                      Condition="'$(EndstoneIdiomaticProjectPath)' != ''" />
+    <ProjectReference Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.Endstone/Hosihikari.Binding.Endstone.csproj"
+                      Condition="'$(EndstoneIdiomaticProjectPath)' == ''" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>
