@@ -2,8 +2,8 @@ namespace Hosihikari.Extension.Hook;
 
 /// <summary>Installs function detours through the current carrier.</summary>
 /// <remarks>
-/// Escape hatch, not a portable capability: a target is a raw address resolved against a
-/// specific carrier build, so a hook is tied to that carrier and version.
+/// Paper-style runtime hooking is portable as a mechanism; a target is a raw address resolved
+/// against a specific carrier build, so an installed hook is tied to that carrier and version.
 /// </remarks>
 public interface IHookService
 {

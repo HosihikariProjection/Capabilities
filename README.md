@@ -25,6 +25,7 @@ package of the carrier they adapt.
 ## Status
 
 The contracts and the event catalog are the first slice. The Endstone publisher follows once
-its event surface is wrapped in `Hosihikari.Binding.Endstone`. The hook capability is an escape
-hatch: the LeviLamina adapter is available, while Endstone and self-hosted wait for a detour
-engine. See [docs/capability-matrix.md](docs/capability-matrix.md).
+its event surface is wrapped in `Hosihikari.Binding.Endstone`. The hook capability is the
+native analogue of Paper's asm-utils: the mechanism is portable, the targets are carrier- and
+version-specific. The LeviLamina adapter is available; Endstone and self-hosted wait for a
+detour engine. See [docs/capability-matrix.md](docs/capability-matrix.md).
