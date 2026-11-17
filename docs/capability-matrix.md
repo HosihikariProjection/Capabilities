@@ -7,7 +7,7 @@ the reason it cannot exist. CI checks that every published adapter has a row ent
 |---|---|---|---|
 | Event | First slice: Join / Leave / Chat | Planned: needs the `ServerPlayer` identity surface and the mutable-string setter | Not available: the self-hosted surface has no game event source |
 | Command | Planned | Planned: the surface has no command executor | Planned |
-| Async | Planned: server-thread `SynchronizationContext` over `Scheduler.runTask` | Planned: over `ServerThreadExecutor.getDefault()` | Not available: no general tick hook |
+| Async | Blocked: needs a carrier-object outlet for the host plugin (framework v2 decision) | Available: `RunAsync`/`Post` and `SwitchToServerThread` over `ServerThreadExecutor`; ambient `await` continuations need the carrier component, which has no production driver yet | Not available: no general tick hook |
 | Hook | Deferred: the runtime's hook is internal, so a detour engine would be needed | Available: wrapped over `ll::memory::hook` / `unhook`; targets are carrier- and version-specific | Deferred: needs a detour engine and a tick target |
 | UI | Available: action forms; message/modal forms need factories | Planned: would build form JSON over the Bedrock packet surface | Planned: same packet path |
 
