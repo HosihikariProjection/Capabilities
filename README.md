@@ -31,10 +31,14 @@ package of the carrier they adapt.
 
 ## Status
 
-The contracts and the event catalog are the first slice. The Endstone publisher follows once
-its event surface is wrapped in `Hosihikari.Binding.Endstone`. The hook capability is the
-native analogue of Paper's asm-utils: the mechanism is portable, the targets are carrier- and
-version-specific. The LeviLamina adapter is available; Endstone and self-hosted wait for a
-detour engine. UI starts with action forms on Endstone; message and modal forms need
-factories, and the other carriers would build form JSON over the packet surface. See
+The contracts and the event catalog are the first slice. The Endstone publisher component is
+written; it attaches once the carrier package injects the host handle (the v2 deployable
+carrier shape, which has no date yet). The hook capability is the native analogue of Paper's
+asm-utils: the mechanism is portable, the targets are carrier- and version-specific. The
+LeviLamina adapter is available; Endstone and self-hosted wait for a detour engine. UI starts
+with action forms on Endstone; message and modal forms need factories, and the other carriers
+would build form JSON over the packet surface. See
 [docs/capability-matrix.md](docs/capability-matrix.md).
+
+`tests/Hosihikari.Extension.Tests` exercises the plugin-facing surface without an adapter,
+which is also the capability-unavailable path; CI builds every project and runs it.
