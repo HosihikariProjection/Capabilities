@@ -16,6 +16,7 @@ above them (Design ADR-0028).
 | `Hosihikari.Extension.Hook.LeviLamina` | LeviLamina hook adapter | follows the LeviLamina Idiomatic version |
 | `Hosihikari.Extension.UI` | UI capability (forms) | 0.1.0 |
 | `Hosihikari.Extension.UI.Endstone` | Endstone form adapter | follows the Endstone Idiomatic version |
+| `Hosihikari.Carrier.LeviLamina` | LeviLamina carrier component (server-thread context) | 26.60.7-r0 |
 
 `Abstractions` and `Event` are shared-layer assemblies: the framework bus dispatches by
 `typeof(TEvent)`, so every plugin must see the same event type. The carrier declares them and

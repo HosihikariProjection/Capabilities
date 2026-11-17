@@ -13,6 +13,7 @@
 | `Hosihikari.Extension.Hook.LeviLamina` | LeviLamina Hook 适配器 | 跟随 LeviLamina Idiomatic 版本 |
 | `Hosihikari.Extension.UI` | UI 能力（表单） | 0.1.0 |
 | `Hosihikari.Extension.UI.Endstone` | Endstone 表单适配器 | 跟随 Endstone Idiomatic 版本 |
+| `Hosihikari.Carrier.LeviLamina` | LeviLamina 载体组件（服务端线程上下文） | 26.60.7-r0 |
 
 `Abstractions` 与 `Event` 是共享层程序集：框架总线按 `typeof(TEvent)` 精确匹配，所有插件必须看到同一份事件类型。载体声明它们，发布器作为进程级**载体组件**运行（框架 ADR-0061）；插件只通过 `IPluginContext.Events` 订阅。
 
