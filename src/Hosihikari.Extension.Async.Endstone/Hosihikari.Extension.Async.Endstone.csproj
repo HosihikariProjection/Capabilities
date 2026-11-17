@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Hosihikari.Extension.Async.Endstone</PackageId>
+    <Version>0.11.15-r0</Version>
+    <Authors>Hosihikari</Authors>
+    <Description>Endstone adapter and carrier component for the async capability.</Description>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/HosihikariProjection/CapabilityExtension</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>minecraft;bedrock;bds;hosihikari;extension;async;endstone</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Hosihikari.Extension.Async/Hosihikari.Extension.Async.csproj" />
+    <ProjectReference Include="../Hosihikari.Carrier.Endstone/Hosihikari.Carrier.Endstone.csproj" />
+    <ProjectReference Include="$(PluginAbstractionsProjectPath)"
+                      Condition="'$(PluginAbstractionsProjectPath)' != ''" />
+    <ProjectReference Include="../../../../Framework/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj"
+                      Condition="'$(PluginAbstractionsProjectPath)' == ''" />
+    <ProjectReference Include="$(EndstoneIdiomaticProjectPath)"
+                      Condition="'$(EndstoneIdiomaticProjectPath)' != ''" />
+    <ProjectReference Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.Endstone/Hosihikari.Binding.Endstone.csproj"
+                      Condition="'$(EndstoneIdiomaticProjectPath)' == ''" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>
