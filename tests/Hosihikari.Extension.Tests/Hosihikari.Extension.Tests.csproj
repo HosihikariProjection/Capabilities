@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Only the carrier-neutral contracts: the tests exercise the plugin-facing surface
+       without an adapter, which is also the "capability unavailable" path. -->
+  <ItemGroup>
+    <ProjectReference Include="../../src/Hosihikari.Extension.Abstractions/Hosihikari.Extension.Abstractions.csproj" />
+    <ProjectReference Include="../../src/Hosihikari.Extension.Async/Hosihikari.Extension.Async.csproj" />
+    <ProjectReference Include="../../src/Hosihikari.Extension.Event/Hosihikari.Extension.Event.csproj" />
+    <ProjectReference Include="../../src/Hosihikari.Extension.Hook/Hosihikari.Extension.Hook.csproj" />
+    <ProjectReference Include="../../src/Hosihikari.Extension.UI/Hosihikari.Extension.UI.csproj" />
+  </ItemGroup>
+
+</Project>

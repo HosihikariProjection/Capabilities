@@ -1,0 +1,65 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Pinned so a push to a sibling repository cannot change what this run builds;
+      # bump together with the package versions the adapters are packed against.
+      - name: Idiomatic layer
+        uses: actions/checkout@v4
+        with:
+          repository: HosihikariProjection/BindingIdiomatic
+          path: Binding.Idiomatic
+          ref: cb58c87
+
+      - name: ABI contract
+        uses: actions/checkout@v4
+        with:
+          repository: HosihikariProjection/BindingAbi
+          path: Binding.Abi
+          ref: 0cefbb52067d31c8488269d2f1a701624c3a8729
+
+      - name: Endstone Interop
+        uses: actions/checkout@v4
+        with:
+          repository: HosihikariProjection/EndstoneBinding
+          path: Binding.Endstone
+          ref: 53512018a19e895971e37543d37ed37b7511f186
+
+      - name: LeviLamina Interop
+        uses: actions/checkout@v4
+        with:
+          repository: HosihikariProjection/LeviLaminaBinding
+          path: Binding.LeviLamina
+
+      - name: Plugin Abstractions
+        uses: actions/checkout@v4
+        with:
+          repository: HosihikariFramework/PluginAbstractions
+          path: Plugin.Abstractions
+          ref: 61fc2b2
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build
+        run: >
+          dotnet build Hosihikari.Extension.slnx -c Release
+          -p:PluginAbstractionsProjectPath=${{ github.workspace }}/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj
+          -p:LeviLaminaIdiomaticProjectPath=${{ github.workspace }}/Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj
+          -p:EndstoneIdiomaticProjectPath=${{ github.workspace }}/Binding.Idiomatic/src/Hosihikari.Binding.Endstone/Hosihikari.Binding.Endstone.csproj
+          -p:AbiProjectPath=${{ github.workspace }}/Binding.Abi/src/Hosihikari.Bindings.Abi/Hosihikari.Bindings.Abi.csproj
+          -p:EndstoneInteropProjectPath=${{ github.workspace }}/Binding.Endstone/src/Hosihikari.Bindings.Endstone.Interop/Hosihikari.Bindings.Endstone.Interop.csproj
+          -p:LeviLaminaInteropProjectPath=${{ github.workspace }}/Binding.LeviLamina/src/Hosihikari.Bindings.LeviLamina.Interop/Hosihikari.Bindings.LeviLamina.Interop.csproj
+
+      - name: Test
+        run: dotnet run --project tests/Hosihikari.Extension.Tests/Hosihikari.Extension.Tests.csproj -c Release
