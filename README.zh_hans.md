@@ -24,4 +24,6 @@
 
 ## 状态
 
-契约与事件目录是第一个切片。Endstone 发布器等它的事件面在 `Hosihikari.Binding.Endstone` 里包装完成后跟进。Hook 能力是 Paper `asm-utils` 的原生对应物：机制可移植，目标按载体与版本；LeviLamina 适配器可用，Endstone 与自持要等 detour 引擎。UI 从 Endstone 的 ActionForm 起步；MessageForm/ModalForm 缺工厂，其余载体需要在报文面上自建表单 JSON。见 [docs/capability-matrix.md](docs/capability-matrix.md)。
+契约与事件目录是第一个切片。Endstone 发布器组件已写好，等载体包注入宿主句柄后挂接（v2 可部署载体形态，尚无日期）。Hook 能力是 Paper `asm-utils` 的原生对应物：机制可移植，目标按载体与版本；LeviLamina 适配器可用，Endstone 与自持要等 detour 引擎。UI 从 Endstone 的 ActionForm 起步；MessageForm/ModalForm 缺工厂，其余载体需要在报文面上自建表单 JSON。见 [docs/capability-matrix.md](docs/capability-matrix.md)。
+
+`tests/Hosihikari.Extension.Tests` 在没有适配器的进程里验证插件侧表面，这也是能力不可用路径；CI 构建全部工程并运行它。
