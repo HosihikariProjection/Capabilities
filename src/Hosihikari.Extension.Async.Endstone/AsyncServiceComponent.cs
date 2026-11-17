@@ -1,0 +1,47 @@
+using Hosihikari.Binding;
+using Hosihikari.Binding.Endstone;
+using Hosihikari.Carrier.Endstone;
+using InteropPlugin = Hosihikari.Bindings.Endstone.Interop.endstone.Plugin;
+
+namespace Hosihikari.Extension.Async.Endstone;
+
+/// <summary>Installs the async capability on the Endstone carrier.</summary>
+/// <remarks>
+/// Registration waits for the carrier package to inject the host plugin: the scheduler runs
+/// queued work under that plugin's lifetime. Without a host the component leaves the capability
+/// unavailable instead of failing the boot, and stopping clears the executor so later calls are
+/// loud rather than queued under a disabled plugin.
+/// </remarks>
+public sealed class AsyncServiceComponent : ICarrierComponent
+{
+    private readonly EndstoneAsyncService _service = new();
+    private bool _registered;
+
+    /// <inheritdoc/>
+    public ValueTask StartAsync(ICarrierComponentContext context, CancellationToken token)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        if (context.CarrierServices.GetService(typeof(ICarrierHost)) is not ICarrierHost { Plugin: not 0 } host)
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        var scope = BindingScope.For(typeof(AsyncServiceComponent).Assembly);
+        var plugin = Plugin.From(InteropPlugin.Borrow(host.Plugin), scope);
+        _service.SetExecutor(new ServerExecutor(plugin));
+        if (!_registered)
+        {
+            AsyncExtension.Use(_service);
+            _registered = true;
+        }
+
+        return ValueTask.CompletedTask;
+    }
+
+    /// <inheritdoc/>
+    public ValueTask StopAsync(CancellationToken token)
+    {
+        _service.SetExecutor(null);
+        return ValueTask.CompletedTask;
+    }
+}

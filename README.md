@@ -20,6 +20,7 @@ above them (Design ADR-0028).
 | `Hosihikari.Carrier.Endstone` | Endstone carrier components and the host-handle contract | 0.11.15-r0 |
 | `Hosihikari.Extension.Async` | Async capability (server-thread scheduling) | 0.1.0 |
 | `Hosihikari.Extension.Async.LeviLamina` | LeviLamina async adapter | 26.60.7-r0 |
+| `Hosihikari.Extension.Async.Endstone` | Endstone async adapter and component | follows the Endstone Idiomatic version |
 
 `Abstractions` and `Event` are shared-layer assemblies: the framework bus dispatches by
 `typeof(TEvent)`, so every plugin must see the same event type. The carrier declares them and
