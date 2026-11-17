@@ -12,4 +12,7 @@
     <Project Path="src/Hosihikari.Carrier.Endstone/Hosihikari.Carrier.Endstone.csproj" />
     <Project Path="src/Hosihikari.Extension.Event.Endstone/Hosihikari.Extension.Event.Endstone.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Hosihikari.Extension.Tests/Hosihikari.Extension.Tests.csproj" />
+  </Folder>
 </Solution>
