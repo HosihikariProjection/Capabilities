@@ -9,5 +9,7 @@
     <Project Path="src/Hosihikari.Carrier.LeviLamina/Hosihikari.Carrier.LeviLamina.csproj" />
     <Project Path="src/Hosihikari.Extension.Async/Hosihikari.Extension.Async.csproj" />
     <Project Path="src/Hosihikari.Extension.Async.LeviLamina/Hosihikari.Extension.Async.LeviLamina.csproj" />
+    <Project Path="src/Hosihikari.Carrier.Endstone/Hosihikari.Carrier.Endstone.csproj" />
+    <Project Path="src/Hosihikari.Extension.Event.Endstone/Hosihikari.Extension.Event.Endstone.csproj" />
   </Folder>
 </Solution>

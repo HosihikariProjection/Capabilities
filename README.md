@@ -17,6 +17,7 @@ above them (Design ADR-0028).
 | `Hosihikari.Extension.UI` | UI capability (forms) | 0.1.0 |
 | `Hosihikari.Extension.UI.Endstone` | Endstone form adapter | follows the Endstone Idiomatic version |
 | `Hosihikari.Carrier.LeviLamina` | LeviLamina carrier component (server-thread context) | 26.60.7-r0 |
+| `Hosihikari.Carrier.Endstone` | Endstone carrier components and the host-handle contract | 0.11.15-r0 |
 | `Hosihikari.Extension.Async` | Async capability (server-thread scheduling) | 0.1.0 |
 | `Hosihikari.Extension.Async.LeviLamina` | LeviLamina async adapter | 26.60.7-r0 |
 
