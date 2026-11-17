@@ -18,7 +18,7 @@ jobs:
         with:
           repository: HosihikariProjection/BindingIdiomatic
           path: Binding.Idiomatic
-          ref: cb58c87
+          ref: cb58c87e22da3caa5ab9597bbf856e385608554a
 
       - name: ABI contract
         uses: actions/checkout@v4
@@ -45,7 +45,7 @@ jobs:
         with:
           repository: HosihikariFramework/PluginAbstractions
           path: Plugin.Abstractions
-          ref: 61fc2b2
+          ref: 61fc2b21e9466c7da26446b7252bcf29ffcc1e8e
 
       - uses: actions/setup-dotnet@v4
         with:
