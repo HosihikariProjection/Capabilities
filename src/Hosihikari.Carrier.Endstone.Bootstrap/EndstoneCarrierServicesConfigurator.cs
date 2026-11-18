@@ -21,26 +21,29 @@ public sealed class EndstoneCarrierServicesConfigurator : ICarrierServicesConfig
 
         // A missing shim fails the whole boot here, where the reason is still legible; the
         // components would otherwise throw far from the cause on their first binding call.
-        foreach (var name in ShimFiles)
+        var name = ShimFile;
+        var path = Path.Combine(context.CarrierDirectory, name);
+        if (!File.Exists(path))
         {
-            var path = Path.Combine(context.CarrierDirectory, name);
-            if (!File.Exists(path))
-            {
-                throw new FileNotFoundException(
-                    $"The carrier package at {context.CarrierDirectory} does not contain {name}.",
-                    path);
-            }
-
-            Load(path);
+            throw new FileNotFoundException(
+                $"The carrier package at {context.CarrierDirectory} does not contain {name}.",
+                path);
         }
+
+        Load(path);
 
         context.Services.AddSingleton(typeof(ICarrierHost), new EndstoneCarrierHost(context.HostHandle));
     }
 
-    private static readonly string[] ShimFiles =
-    [
-        "Hosihikari.Bindings.Endstone.Shim.dll",
-    ];
+    /// <summary>The shim as the runtime packages it, per platform.</summary>
+    /// <remarks>
+    /// The name carries the platform's own library convention: the Windows shim is a DLL and the
+    /// Linux one is a version-less .so. Renaming either to a single spelling would make every
+    /// build and packaging rule disagree with what the loader actually produced.
+    /// </remarks>
+    private static string ShimFile => OperatingSystem.IsWindows()
+        ? "Hosihikari.Bindings.Endstone.Shim.dll"
+        : "libHosihikari.Bindings.Endstone.Shim.so";
 
     /// <summary>Loads one shim; the binding library keeps its own handle.</summary>
     private static void Load(string path) => InteropNativeMethods.Load(path);
