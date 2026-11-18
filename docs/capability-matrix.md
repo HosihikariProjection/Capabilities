@@ -29,5 +29,13 @@ only visible to plugins if the contract assemblies are in the carrier's shared l
 packaging decision recorded in the carrier package manifest; until it lands, a written component
 is not the same as a reachable capability.
 
+**What has been verified, and what has not**: the Endstone package has been booted on BDS
+26.60.6 with the carrier plugin, the bootstrap, the shared layer and a probe plugin; the
+"register while not enabled" rejection is gone and the publisher reports available only after
+all three listeners register. **Actual delivery from a native event into a plugin's
+`Subscribe<T>` has not been observed yet** — it needs a logged-in client, and the event
+constructors cannot synthesize a player without one (`PlayerChatEvent::Create` is a stub for the
+`std::vector<Player*>` parameter; join/quit take a real `Player`).
+
 An unavailable capability throws `CarrierCapabilityUnavailableException` from its entry point
 and reports `IsAvailable = false`; it never degrades silently.
