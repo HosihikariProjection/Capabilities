@@ -21,6 +21,11 @@ public static class AsyncExtension
     private static IAsyncService? _service;
 
     /// <summary>Whether the current carrier can schedule onto the server thread.</summary>
+    /// <remarks>
+    /// On carriers whose components install behind an enable gate this can read false during a
+    /// plugin's early startup and become true later; read it at the point of use rather than
+    /// caching it.
+    /// </remarks>
     public static bool IsAvailable
     {
         get
