@@ -12,9 +12,10 @@
     <Project Path="src/Hosihikari.Extension.Async.Endstone/Hosihikari.Extension.Async.Endstone.csproj" />
     <Project Path="src/Hosihikari.Carrier.Endstone/Hosihikari.Carrier.Endstone.csproj" />
     <Project Path="src/Hosihikari.Extension.Event.Endstone/Hosihikari.Extension.Event.Endstone.csproj" />
-    <!-- Hosihikari.Extension.Event.LeviLamina stays out: the final LeviLamina surface (296ab776)
-         has no player type — ServerPlayerEvent::self() returns a bare nint? — so the adapter
-         cannot fill IPlayerView.Name. It returns once a targeted player-identity batch lands. -->
+    <!-- Hosihikari.Extension.Event.LeviLamina stays out: registration is covered by the final
+         surface (eventId on every event and on the 17 event bases, setMessage, cancellable
+         casts), but ServerPlayerEvent::self() returns a bare nint? and no player type is
+         projected, so IPlayerView.Name cannot be filled. Deferred by decision. -->
     <Project Path="src/Hosihikari.Carrier/Hosihikari.Carrier.csproj" />
     <Project Path="src/Hosihikari.Carrier.Endstone.Bootstrap/Hosihikari.Carrier.Endstone.Bootstrap.csproj" />
     <Project Path="src/Hosihikari.Carrier.LeviLamina.Bootstrap/Hosihikari.Carrier.LeviLamina.Bootstrap.csproj" />
