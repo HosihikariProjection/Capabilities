@@ -15,8 +15,9 @@ namespace Hosihikari.Extension.Event.Endstone;
 /// <summary>Feeds the carrier's player events into the framework bus.</summary>
 /// <remarks>
 /// The carrier package injects the host plugin handle; without it the component starts with no
-/// listeners instead of failing the boot. The carrier has no unregister call, so stopping only
-/// drops the managed delegates.
+/// listeners instead of failing the boot. There is no per-subscription unregister call: stopping
+/// drops the managed delegates, and the carrier removes the native handlers when it disables the
+/// plugin.
 /// <para>
 /// Endstone rejects listener registration until the host plugin is enabled, and only logs the
 /// rejection — so the listeners are registered through a <see cref="PluginEnableGate"/> and the

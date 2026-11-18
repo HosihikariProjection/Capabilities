@@ -29,6 +29,13 @@ only visible to plugins if the contract assemblies are in the carrier's shared l
 packaging decision recorded in the carrier package manifest; until it lands, a written component
 is not the same as a reachable capability.
 
+**Listener lifetime on Endstone**: there is no per-subscription unregister call. Disposing a
+subscription drops the managed delegate; the native handler is removed by the carrier when it
+disables the owning plugin (`EndstonePluginManager::disablePlugin` → `HandlerList::unregister`),
+which also runs the release pointer and frees the callback state. So a disable/reload cycle
+neither leaves stale handlers nor delivers an event twice, and stopping the component early is
+an optimization rather than a leak requirement.
+
 **What has been verified, and what has not**: the Endstone package has been booted on BDS
 26.60.6 with the carrier plugin, the bootstrap, the shared layer and a probe plugin; the
 "register while not enabled" rejection is gone and the publisher reports available only after
