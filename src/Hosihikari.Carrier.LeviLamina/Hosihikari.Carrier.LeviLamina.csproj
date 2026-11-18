@@ -10,7 +10,7 @@
 
   <PropertyGroup>
     <PackageId>Hosihikari.Carrier.LeviLamina</PackageId>
-    <Version>26.60.7-r0</Version>
+    <Version>26.60.7-r1</Version>
     <Authors>Hosihikari</Authors>
     <Description>LeviLamina carrier components: the server-thread synchronization context.</Description>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
