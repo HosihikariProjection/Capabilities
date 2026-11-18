@@ -2,6 +2,7 @@ using Hosihikari.Binding;
 using Hosihikari.Binding.Endstone;
 using Hosihikari.Carrier.Endstone;
 using InteropPlugin = Hosihikari.Bindings.Endstone.Interop.endstone.Plugin;
+using Hosihikari.Carrier;
 
 namespace Hosihikari.Extension.Async.Endstone;
 

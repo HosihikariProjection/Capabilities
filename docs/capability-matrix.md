@@ -5,11 +5,21 @@ the reason it cannot exist. CI checks that every published adapter has a row ent
 
 | Capability | Endstone | LeviLamina | Self-hosted Bedrock |
 |---|---|---|---|
-| Event | Available: publisher component written; waits for the carrier package to inject the host handle (HostingShim #31, no date yet) | Planned: needs the `ServerPlayer` identity surface | Not available: the self-hosted surface has no game event source |
+| Event | Written: publisher component over the loader `EventBus`, one native listener per event type; **needs the host handle** the bootstrap injects (HostingShim #31). Registration visibility for plugins follows the shared-layer decision below | Written: publisher component over the loader's `EventBus.Instance`, one listener per event type, no mod pointer so stop removes them itself. **Does not need a host handle** — the bus is a loader singleton, not a plugin-bound scheduler | Not available: the self-hosted surface has no game event source |
 | Command | Planned | Planned: the surface has no command executor | Planned |
-| Async | Written: `RunAsync`/`Post` and `SwitchToServerThread` over `Scheduler.runTask`, plus the server-thread context. Not reachable yet: both components wait for the host handle (HostingShim #31), and the component's registration is only visible to plugins if `Extension.Async` joins the carrier's shared layer — a packaging decision still open | Available: `RunAsync`/`Post` and `SwitchToServerThread` over `ServerThreadExecutor`; ambient `await` continuations need the carrier component, which has no production driver yet | Not available: no general tick hook |
+| Async | Written: `RunAsync`/`Post` and `SwitchToServerThread` over `Scheduler.runTask`, plus the server-thread context. **Needs the host handle**: `Scheduler.runTask` is bound to the host plugin | Available: `RunAsync`/`Post` and `SwitchToServerThread` over `ServerThreadExecutor`; the server-thread context comes from the carrier component. **Does not need a host handle** | Not available: no general tick hook |
 | Hook | Deferred: the runtime's hook is internal, so a detour engine would be needed | Available: wrapped over `ll::memory::hook` / `unhook`; targets are carrier- and version-specific | Deferred: needs a detour engine and a tick target |
 | UI | Available: action forms; message/modal forms need factories | Planned: would build form JSON over the Bedrock packet surface | Planned: same packet path |
+
+**Host handle**: only the Endstone components depend on `ICarrierHost`; the LeviLamina ones
+never read it (the registered handle there is zero by design). The bootstrap package is what
+loads the carrier's binding shim from the carrier directory, so a missing shim fails the whole
+boot with a legible reason instead of surfacing at a component's first binding call.
+
+**Plugin visibility**: components live on the unloadable carrier side, so what they register is
+only visible to plugins if the contract assemblies are in the carrier's shared layer. That is a
+packaging decision recorded in the carrier package manifest; until it lands, a written component
+is not the same as a reachable capability.
 
 An unavailable capability throws `CarrierCapabilityUnavailableException` from its entry point
 and reports `IsAvailable = false`; it never degrades silently.
