@@ -1,13 +1,14 @@
 using Hosihikari.Binding;
 using Hosihikari.Binding.Endstone;
+using Hosihikari.Carrier;
 using Hosihikari.Carrier.Endstone;
 using Hosihikari.Extension.Abstractions;
 using InteropPlugin = Hosihikari.Bindings.Endstone.Interop.endstone.Plugin;
+using Microsoft.Extensions.Logging;
 using ContractChat = Hosihikari.Extension.Event.PlayerChatEvent;
 using ContractJoin = Hosihikari.Extension.Event.PlayerJoinEvent;
 using ContractLeave = Hosihikari.Extension.Event.PlayerLeaveEvent;
 using NativeEvent = Hosihikari.Binding.Endstone.Event;
-using Hosihikari.Carrier;
 
 namespace Hosihikari.Extension.Event.Endstone;
 
@@ -16,17 +17,27 @@ namespace Hosihikari.Extension.Event.Endstone;
 /// The carrier package injects the host plugin handle; without it the component starts with no
 /// listeners instead of failing the boot. The carrier has no unregister call, so stopping only
 /// drops the managed delegates.
+/// <para>
+/// Endstone rejects listener registration until the host plugin is enabled, and only logs the
+/// rejection — so the listeners are registered through a <see cref="PluginEnableGate"/> and the
+/// capability is marked available only afterwards. Marking it earlier would tell plugins events
+/// are coming when nothing is attached.
+/// </para>
 /// </remarks>
 public sealed class EventPublisherComponent : ICarrierComponent
 {
     private readonly List<EventSubscription> _subscriptions = [];
     private IEventBus? _bus;
+    private BindingScope? _scope;
+    private Plugin? _plugin;
+    private ILogger? _logger;
+    private PluginEnableGate? _gate;
 
     /// <inheritdoc/>
     public ValueTask StartAsync(ICarrierComponentContext context, CancellationToken token)
     {
         ArgumentNullException.ThrowIfNull(context);
-        if (_subscriptions.Count != 0)
+        if (_subscriptions.Count != 0 || _gate is not null)
         {
             throw new InvalidOperationException("The event publisher is already started.");
         }
@@ -37,18 +48,20 @@ public sealed class EventPublisherComponent : ICarrierComponent
         }
 
         var scope = BindingScope.For(typeof(EventPublisherComponent).Assembly);
-        var plugin = Plugin.From(InteropPlugin.Borrow(host.Plugin), scope);
+        _scope = scope;
+        _plugin = Plugin.From(InteropPlugin.Borrow(host.Plugin), scope);
         _bus = context.Events;
-        _subscriptions.Add(EventBus.Register(plugin, "PlayerJoinEvent", OnJoin, scope: scope));
-        _subscriptions.Add(EventBus.Register(plugin, "PlayerQuitEvent", OnQuit, scope: scope));
-        _subscriptions.Add(EventBus.Register(plugin, "PlayerChatEvent", OnChat, scope: scope));
-        EventExtension.MarkAvailable();
+        _logger = context.Logger;
+        _gate = PluginEnableGate.RunWhenEnabled(_plugin, Register, _logger);
         return ValueTask.CompletedTask;
     }
 
     /// <inheritdoc/>
     public ValueTask StopAsync(CancellationToken token)
     {
+        _gate?.Dispose();
+        _gate = null;
+
         foreach (var subscription in _subscriptions)
         {
             subscription.Dispose();
@@ -56,7 +69,40 @@ public sealed class EventPublisherComponent : ICarrierComponent
 
         _subscriptions.Clear();
         _bus = null;
+        _scope = null;
+        _plugin = null;
+        _logger = null;
         return ValueTask.CompletedTask;
+    }
+
+    /// <summary>Registers the native listeners; runs on the server thread after enable.</summary>
+    private void Register()
+    {
+        var plugin = _plugin;
+        var bus = _bus;
+        var scope = _scope;
+        if (plugin is null || bus is null || scope is null)
+        {
+            return;
+        }
+
+        try
+        {
+            _subscriptions.Add(EventBus.Register(plugin, "PlayerJoinEvent", OnJoin, scope: scope));
+            _subscriptions.Add(EventBus.Register(plugin, "PlayerQuitEvent", OnQuit, scope: scope));
+            _subscriptions.Add(EventBus.Register(plugin, "PlayerChatEvent", OnChat, scope: scope));
+            EventExtension.MarkAvailable();
+        }
+        catch (Exception exception)
+        {
+            _logger?.LogError(exception, "The event listeners could not be registered.");
+            foreach (var subscription in _subscriptions)
+            {
+                subscription.Dispose();
+            }
+
+            _subscriptions.Clear();
+        }
     }
 
     private void OnJoin(NativeEvent native)
