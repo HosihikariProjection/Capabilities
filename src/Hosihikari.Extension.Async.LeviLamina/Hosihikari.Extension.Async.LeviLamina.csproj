@@ -12,7 +12,7 @@
 
   <PropertyGroup>
     <PackageId>Hosihikari.Extension.Async.LeviLamina</PackageId>
-    <Version>26.60.7-r0</Version>
+    <Version>26.60.7-r1</Version>
     <Authors>Hosihikari</Authors>
     <Description>LeviLamina adapter for the async capability.</Description>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
