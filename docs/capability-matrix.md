@@ -16,6 +16,14 @@ never read it (the registered handle there is zero by design). The bootstrap pac
 loads the carrier's binding shim from the carrier directory, so a missing shim fails the whole
 boot with a legible reason instead of surfacing at a component's first binding call.
 
+**Availability is late and not monotonic within a plugin's own startup**: Endstone rejects
+listener registration and scheduler submissions until the host plugin is enabled, so a
+component that installs on the carrier side becomes available only after that. Endstone enables
+child plugins *before* the carrier plugin, so a plugin's `OnEnable` can read
+`EventExtension.IsAvailable == false` and see `true` later; read it at the point of use rather
+than caching it. Subscribing does not need the flag — subscriptions made before the publisher
+attaches start receiving events once it does.
+
 **Plugin visibility**: components live on the unloadable carrier side, so what they register is
 only visible to plugins if the contract assemblies are in the carrier's shared layer. That is a
 packaging decision recorded in the carrier package manifest; until it lands, a written component
