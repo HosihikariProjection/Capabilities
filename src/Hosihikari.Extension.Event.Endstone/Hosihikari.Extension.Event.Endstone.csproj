@@ -21,6 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Hosihikari.Carrier/Hosihikari.Carrier.csproj" />
     <ProjectReference Include="../Hosihikari.Extension.Event/Hosihikari.Extension.Event.csproj" />
     <ProjectReference Include="../Hosihikari.Carrier.Endstone/Hosihikari.Carrier.Endstone.csproj" />
     <ProjectReference Include="$(PluginAbstractionsProjectPath)"

@@ -12,6 +12,7 @@ above them (Design ADR-0028).
 | `Hosihikari.Extension.Abstractions` | Shared contracts (`IPlayerView`, …) | 0.1.0 |
 | `Hosihikari.Extension.Event` | Event catalog and the event extension | 0.1.0 |
 | `Hosihikari.Extension.Event.Endstone` | Endstone adapter | follows the Endstone Idiomatic version |
+| `Hosihikari.Extension.Event.LeviLamina` | LeviLamina adapter and component | 26.60.7-r0 |
 | `Hosihikari.Extension.Hook` | Hook capability (Paper-style runtime hooking) | 0.1.0 |
 | `Hosihikari.Extension.Hook.LeviLamina` | LeviLamina hook adapter | follows the LeviLamina Idiomatic version |
 | `Hosihikari.Extension.UI` | UI capability (forms) | 0.1.0 |

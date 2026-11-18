@@ -12,6 +12,11 @@
     <Project Path="src/Hosihikari.Extension.Async.Endstone/Hosihikari.Extension.Async.Endstone.csproj" />
     <Project Path="src/Hosihikari.Carrier.Endstone/Hosihikari.Carrier.Endstone.csproj" />
     <Project Path="src/Hosihikari.Extension.Event.Endstone/Hosihikari.Extension.Event.Endstone.csproj" />
+    <!-- Hosihikari.Extension.Event.LeviLamina stays out until Binding.LeviLamina commits the
+         middle-scope surface: it needs ServerPlayer, which the committed checkpoint lacks. -->
+    <Project Path="src/Hosihikari.Carrier/Hosihikari.Carrier.csproj" />
+    <Project Path="src/Hosihikari.Carrier.Endstone.Bootstrap/Hosihikari.Carrier.Endstone.Bootstrap.csproj" />
+    <Project Path="src/Hosihikari.Carrier.LeviLamina.Bootstrap/Hosihikari.Carrier.LeviLamina.Bootstrap.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Hosihikari.Extension.Tests/Hosihikari.Extension.Tests.csproj" />

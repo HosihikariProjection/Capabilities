@@ -2,6 +2,7 @@ using Hosihikari.Binding;
 using Hosihikari.Binding.Endstone;
 using InteropPlugin = Hosihikari.Bindings.Endstone.Interop.endstone.Plugin;
 using Microsoft.Extensions.Logging;
+using Hosihikari.Carrier;
 
 namespace Hosihikari.Carrier.Endstone;
 

@@ -9,6 +9,7 @@
 | `Hosihikari.Extension.Abstractions` | 共享契约（`IPlayerView` 等） | 0.1.0 |
 | `Hosihikari.Extension.Event` | 事件目录与事件能力 | 0.1.0 |
 | `Hosihikari.Extension.Event.Endstone` | Endstone 适配器 | 跟随 Endstone Idiomatic 版本 |
+| `Hosihikari.Extension.Event.LeviLamina` | LeviLamina 适配器与载体组件 | 26.60.7-r0 |
 | `Hosihikari.Extension.Hook` | Hook 能力（Paper 式运行期挂钩） | 0.1.0 |
 | `Hosihikari.Extension.Hook.LeviLamina` | LeviLamina Hook 适配器 | 跟随 LeviLamina Idiomatic 版本 |
 | `Hosihikari.Extension.UI` | UI 能力（表单） | 0.1.0 |

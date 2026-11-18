@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Generated director factories are [Obsolete] only where the virtual is not exported;
+         the director path itself is supported. -->
+    <NoWarn>$(NoWarn);CS1591;CS0618</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Hosihikari.Extension.Event.LeviLamina</PackageId>
+    <Version>26.60.7-r0</Version>
+    <Authors>Hosihikari</Authors>
+    <Description>LeviLamina adapter and carrier component for the event capability.</Description>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/HosihikariProjection/CapabilityExtension</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>minecraft;bedrock;bds;hosihikari;extension;events;levilamina</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Hosihikari.Extension.Event/Hosihikari.Extension.Event.csproj" />
+    <ProjectReference Include="../Hosihikari.Carrier.LeviLamina/Hosihikari.Carrier.LeviLamina.csproj" />
+    <ProjectReference Include="$(LeviLaminaIdiomaticProjectPath)"
+                      Condition="'$(LeviLaminaIdiomaticProjectPath)' != ''" />
+    <ProjectReference Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj"
+                      Condition="'$(LeviLaminaIdiomaticProjectPath)' == ''" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>

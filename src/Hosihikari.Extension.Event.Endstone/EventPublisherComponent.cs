@@ -7,6 +7,7 @@ using ContractChat = Hosihikari.Extension.Event.PlayerChatEvent;
 using ContractJoin = Hosihikari.Extension.Event.PlayerJoinEvent;
 using ContractLeave = Hosihikari.Extension.Event.PlayerLeaveEvent;
 using NativeEvent = Hosihikari.Binding.Endstone.Event;
+using Hosihikari.Carrier;
 
 namespace Hosihikari.Extension.Event.Endstone;
 
