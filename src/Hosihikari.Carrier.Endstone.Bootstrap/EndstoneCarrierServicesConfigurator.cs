@@ -1,6 +1,6 @@
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
-using InteropNativeMethods = Hosihikari.Bindings.Endstone.Interop.NativeMethods;
+using InteropNativeMethods = Hosihikari.Binding.Endstone.Interop.NativeMethods;
 using Hosihikari.Carrier;
 
 namespace Hosihikari.Carrier.Endstone;
@@ -42,8 +42,8 @@ public sealed class EndstoneCarrierServicesConfigurator : ICarrierServicesConfig
     /// build and packaging rule disagree with what the loader actually produced.
     /// </remarks>
     private static string ShimFile => OperatingSystem.IsWindows()
-        ? "Hosihikari.Bindings.Endstone.Shim.dll"
-        : "libHosihikari.Bindings.Endstone.Shim.so";
+        ? "Hosihikari.Binding.Endstone.Shim.dll"
+        : "libHosihikari.Binding.Endstone.Shim.so";
 
     /// <summary>Loads one shim; the binding library keeps its own handle.</summary>
     private static void Load(string path) => InteropNativeMethods.Load(path);

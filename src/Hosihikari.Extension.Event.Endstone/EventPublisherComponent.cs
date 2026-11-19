@@ -3,7 +3,7 @@ using Hosihikari.Binding.Endstone;
 using Hosihikari.Carrier;
 using Hosihikari.Carrier.Endstone;
 using Hosihikari.Extension.Abstractions;
-using InteropPlugin = Hosihikari.Bindings.Endstone.Interop.endstone.Plugin;
+using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
 using Microsoft.Extensions.Logging;
 using ContractChat = Hosihikari.Extension.Event.PlayerChatEvent;
 using ContractJoin = Hosihikari.Extension.Event.PlayerJoinEvent;

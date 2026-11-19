@@ -1,6 +1,6 @@
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
-using InteropNativeMethods = Hosihikari.Bindings.LeviLamina.Interop.NativeMethods;
+using InteropNativeMethods = Hosihikari.Binding.LeviLamina.Interop.NativeMethods;
 using Hosihikari.Carrier;
 
 namespace Hosihikari.Carrier.LeviLamina;
@@ -32,7 +32,7 @@ public sealed class LeviLaminaCarrierServicesConfigurator : ICarrierServicesConf
         context.Services.AddSingleton(typeof(ICarrierHost), new LeviLaminaCarrierHost());
     }
 
-    private const string ShimFile = "Hosihikari.Bindings.LeviLamina.Shim.dll";
+    private const string ShimFile = "Hosihikari.Binding.LeviLamina.Shim.dll";
 }
 
 /// <summary>The host handle for LeviLamina: always zero.</summary>
