@@ -12,7 +12,7 @@
 
   <PropertyGroup>
     <PackageId>Hosihikari.Extension.UI.Endstone</PackageId>
-    <Version>0.11.15-r0</Version>
+    <Version>0.11.16-r0</Version>
     <Authors>Hosihikari</Authors>
     <Description>Endstone adapter for the UI capability.</Description>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
