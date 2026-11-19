@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using InteropNativeMethods = Hosihikari.Binding.Endstone.Interop.NativeMethods;
 using Hosihikari.Carrier;
 
-namespace Hosihikari.Carrier.Endstone;
+namespace Hosihikari.Carrier.Endstone.Bootstrap;
 
 /// <summary>Registers the Endstone carrier host before any component starts.</summary>
 /// <remarks>
