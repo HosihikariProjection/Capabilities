@@ -57,9 +57,9 @@ jobs:
           -p:PluginAbstractionsProjectPath=${{ github.workspace }}/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj
           -p:LeviLaminaIdiomaticProjectPath=${{ github.workspace }}/Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj
           -p:EndstoneIdiomaticProjectPath=${{ github.workspace }}/Binding.Idiomatic/src/Hosihikari.Binding.Endstone/Hosihikari.Binding.Endstone.csproj
-          -p:AbiProjectPath=${{ github.workspace }}/Binding.Abi/src/Hosihikari.Bindings.Abi/Hosihikari.Bindings.Abi.csproj
-          -p:EndstoneInteropProjectPath=${{ github.workspace }}/Binding.Endstone/src/Hosihikari.Bindings.Endstone.Interop/Hosihikari.Bindings.Endstone.Interop.csproj
-          -p:LeviLaminaInteropProjectPath=${{ github.workspace }}/Binding.LeviLamina/src/Hosihikari.Bindings.LeviLamina.Interop/Hosihikari.Bindings.LeviLamina.Interop.csproj
+          -p:AbiProjectPath=${{ github.workspace }}/Binding.Abi/src/Hosihikari.Binding.Abi/Hosihikari.Binding.Abi.csproj
+          -p:EndstoneInteropProjectPath=${{ github.workspace }}/Binding.Endstone/src/Hosihikari.Binding.Endstone.Interop/Hosihikari.Binding.Endstone.Interop.csproj
+          -p:LeviLaminaInteropProjectPath=${{ github.workspace }}/Binding.LeviLamina/src/Hosihikari.Binding.LeviLamina.Interop/Hosihikari.Binding.LeviLamina.Interop.csproj
 
       - name: Test
         run: dotnet run --project tests/Hosihikari.Extension.Tests/Hosihikari.Extension.Tests.csproj -c Release

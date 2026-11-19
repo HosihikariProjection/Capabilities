@@ -10,7 +10,7 @@
 
   <PropertyGroup>
     <PackageId>Hosihikari.Carrier.LeviLamina.Bootstrap</PackageId>
-    <Version>26.60.7-r1</Version>
+    <Version>26.60.7-r0</Version>
     <Authors>Hosihikari</Authors>
     <Description>LeviLamina carrier bootstrap: loads the shims and registers the (empty) host handle before any component starts.</Description>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>

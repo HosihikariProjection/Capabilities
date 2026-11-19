@@ -1,10 +1,10 @@
 using System.Runtime.InteropServices;
 using Hosihikari.Binding.LeviLamina;
-using InteropEvent = Hosihikari.Bindings.LeviLamina.Interop.ll.@event.Event;
-using InteropEventIdView = Hosihikari.Bindings.LeviLamina.Interop.ll.@event.EventIdView;
-using InteropEventPriority = Hosihikari.Bindings.LeviLamina.Interop.ll.@event.EventPriority;
-using InteropListenerBase = Hosihikari.Bindings.LeviLamina.Interop.ll.@event.ListenerBase;
-using SharedHandle = Hosihikari.Bindings.Abi.SharedHandle;
+using InteropEvent = Hosihikari.Binding.LeviLamina.Interop.ll.@event.Event;
+using InteropEventIdView = Hosihikari.Binding.LeviLamina.Interop.ll.@event.EventIdView;
+using InteropEventPriority = Hosihikari.Binding.LeviLamina.Interop.ll.@event.EventPriority;
+using InteropListenerBase = Hosihikari.Binding.LeviLamina.Interop.ll.@event.ListenerBase;
+using SharedHandle = Hosihikari.Binding.Abi.SharedHandle;
 
 namespace Hosihikari.Extension.Event.LeviLamina;
 
