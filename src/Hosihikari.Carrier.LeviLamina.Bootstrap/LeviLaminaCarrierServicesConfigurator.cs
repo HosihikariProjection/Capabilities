@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using InteropNativeMethods = Hosihikari.Binding.LeviLamina.Interop.NativeMethods;
 using Hosihikari.Carrier;
 
-namespace Hosihikari.Carrier.LeviLamina;
+namespace Hosihikari.Carrier.LeviLamina.Bootstrap;
 
 /// <summary>Registers the LeviLamina carrier host before any component starts.</summary>
 /// <remarks>
