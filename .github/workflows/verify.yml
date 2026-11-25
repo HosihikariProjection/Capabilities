@@ -18,7 +18,7 @@ jobs:
         with:
           repository: HosihikariProjection/BindingIdiomatic
           path: Binding.Idiomatic
-          ref: 125467c136bfdb282314716b1a60bc5e3059e7e5
+          ref: 204756fd2f369879f42a154e28a095212ba37f4c
 
       - name: ABI contract
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
         with:
           repository: HosihikariProjection/EndstoneBinding
           path: Binding.Endstone
-          ref: 173c29aa4794ba016c65e35c8755d9b873443203
+          ref: 057b51506b035da5ff95a866884bf2c12f293035
 
       - name: LeviLamina Interop
         uses: actions/checkout@v4
