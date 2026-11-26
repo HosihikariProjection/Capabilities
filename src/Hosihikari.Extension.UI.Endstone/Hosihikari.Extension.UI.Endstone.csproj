@@ -24,6 +24,11 @@
 
   <ItemGroup>
     <ProjectReference Include="../Hosihikari.Extension.UI/Hosihikari.Extension.UI.csproj" />
+    <ProjectReference Include="../Hosihikari.Carrier/Hosihikari.Carrier.csproj" />
+    <ProjectReference Include="$(PluginAbstractionsProjectPath)"
+                      Condition="'$(PluginAbstractionsProjectPath)' != ''" />
+    <ProjectReference Include="../../../../Framework/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj"
+                      Condition="'$(PluginAbstractionsProjectPath)' == ''" />
     <ProjectReference Include="$(EndstoneIdiomaticProjectPath)"
                       Condition="'$(EndstoneIdiomaticProjectPath)' != ''" />
     <ProjectReference Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.Endstone/Hosihikari.Binding.Endstone.csproj"

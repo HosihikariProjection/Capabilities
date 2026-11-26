@@ -50,6 +50,15 @@ public sealed class EndstoneUiService : IUiService
 
 internal static class Registration
 {
+    /// <summary>
+    /// Registers the adapter for hosts that run module initializers.
+    /// </summary>
+    /// <remarks>
+    /// Endstone does not reach this: its assemblies are loaded by path into a component host
+    /// that never touches a type, and loading an already-loaded assembly by name does not run
+    /// the initializer either. <see cref="UiServiceComponent"/> does the registration there; the
+    /// initializer stays for the hosts where it does fire, and <c>Use</c> is idempotent.
+    /// </remarks>
     [ModuleInitializer]
     internal static void Initialize() => UiExtension.Use(new EndstoneUiService());
 }
