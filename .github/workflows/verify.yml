@@ -50,7 +50,13 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: "10.0.x"
+
+      # Ahead of the build: a formatting failure is the cheapest one to report. No property
+      # overrides are passed — dotnet format has no switch for them, and the sibling checkouts
+      # already sit at the paths each project's default fallback names.
+      - name: Format
+        run: dotnet format Hosihikari.Extension.slnx --verify-no-changes
 
       - name: Build
         run: >
