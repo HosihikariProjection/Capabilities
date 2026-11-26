@@ -52,11 +52,12 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      # Ahead of the build: a formatting failure is the cheapest one to report. No property
-      # overrides are passed — dotnet format has no switch for them, and the sibling checkouts
-      # already sit at the paths each project's default fallback names.
+      # Ahead of the build: a formatting failure is the cheapest one to report. Scoped to this
+      # repository's own trees, because the sibling checkouts this solution references are
+      # pinned and carry their own formatting jobs — a pin bump would otherwise fail here on
+      # someone else's history.
       - name: Format
-        run: dotnet format Hosihikari.Extension.slnx --verify-no-changes
+        run: dotnet format Hosihikari.Extension.slnx --verify-no-changes --include src tests
 
       - name: Build
         run: >
