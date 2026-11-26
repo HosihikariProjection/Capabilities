@@ -7,7 +7,6 @@ using InteropDisconnect = Hosihikari.Binding.LeviLamina.Interop.ll.@event.Player
 using InteropEvent = Hosihikari.Binding.LeviLamina.Interop.ll.@event.Event;
 using InteropEventIdView = Hosihikari.Binding.LeviLamina.Interop.ll.@event.EventIdView;
 using InteropJoin = Hosihikari.Binding.LeviLamina.Interop.ll.@event.PlayerJoinEvent;
-using InteropServerPlayer = Hosihikari.Binding.LeviLamina.Interop.ServerPlayer;
 using ContractChat = Hosihikari.Extension.Event.PlayerChatEvent;
 using ContractJoin = Hosihikari.Extension.Event.PlayerJoinEvent;
 using ContractLeave = Hosihikari.Extension.Event.PlayerLeaveEvent;
@@ -136,18 +135,19 @@ public sealed class EventPublisherComponent : ICarrierComponent
 
 /// <summary>A player as the carrier sees it, valid only during the callback.</summary>
 /// <remarks>
-/// The generated surface is flat — <c>ServerPlayer</c> does not inherit <c>Player</c>/<c>Actor</c>
-/// — so identity members are reached through the emitted downcasts.
+/// <c>ServerPlayerEvent::self()</c> answers a raw pointer: <c>ServerPlayer</c> and its
+/// <c>Player</c>/<c>Actor</c> bases are outside the projected LLAPI surface, so a reference
+/// return stays an opaque handle there. <see cref="Services"/> has the same shape for the same
+/// reason. What that leaves is a view with a handle and nothing to read off it — the identity
+/// members do exist in the carrier, they are just not reachable until the type is projected.
 /// </remarks>
-internal sealed class LeviLaminaPlayerView(InteropServerPlayer player) : IPlayerView
+internal sealed class LeviLaminaPlayerView(nint player) : IPlayerView
 {
-    public string Name => player.AsActor()?.getNameTag() ?? "";
+    // Not reachable through the handle: getNameTag() sits on Actor, which is not projected.
+    public string Name => "";
 
-    // The carrier's getXuid() is a pure virtual with no exported symbol.
+    // getXuid() is a pure virtual with no exported symbol even where Player is projected.
     public string Xuid => "";
 
-    public object? NativeView => player;
-
-    /// <summary>The native UUID text, or an empty string once the player is gone.</summary>
-    public string Uuid => player.AsPlayer()?.getUuid()?.asString() ?? "";
+    public object NativeView => player;
 }

@@ -21,6 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Hosihikari.Carrier/Hosihikari.Carrier.csproj" />
     <ProjectReference Include="$(PluginAbstractionsProjectPath)"
                       Condition="'$(PluginAbstractionsProjectPath)' != ''" />
     <ProjectReference Include="../../../../Framework/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj"
