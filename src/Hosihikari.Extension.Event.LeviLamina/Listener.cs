@@ -10,23 +10,26 @@ namespace Hosihikari.Extension.Event.LeviLamina;
 
 /// <summary>One native listener whose callback lands back on the publisher.</summary>
 /// <remarks>
-/// The director is created with no mod pointer, so nothing but this type removes it: detaching
-/// unregisters from the bus first, then releases the native listener and the managed handle.
-/// The event id is owned here and released last.
+/// The listener carries the carrier mod's handle: LeviLamina locks a listener's owning mod
+/// before it accepts a registration, and a director made without one is refused outright.
+/// Detaching unregisters from the bus first, then releases the native listener and the managed
+/// handle. The event id is owned here and released last.
 /// </remarks>
 internal sealed unsafe class Listener : IDisposable
 {
     private readonly EventPublisherComponent _owner;
     private readonly InteropEventIdView _id;
+    private readonly SharedHandle _mod;
     private readonly GCHandle _self;
     private EventBus? _bus;
     private SharedHandle? _director;
     private bool _attached;
 
-    internal Listener(EventPublisherComponent owner, InteropEventIdView id)
+    internal Listener(EventPublisherComponent owner, InteropEventIdView id, SharedHandle mod)
     {
         _owner = owner;
         _id = id;
+        _mod = mod;
         _self = GCHandle.Alloc(this);
     }
 
@@ -37,13 +40,14 @@ internal sealed unsafe class Listener : IDisposable
             throw new InvalidOperationException("The listener is already attached.");
         }
 
-        var director = InteropListenerBase.CreateDirector(
-            (int)InteropEventPriority.Normal,
-            null,
-            (nint)(delegate* unmanaged<nint, nint, void>)&Trampoline.Invoke,
-            GCHandle.ToIntPtr(_self),
-            (nint)(delegate* unmanaged<nint, void>)&Trampoline.Release)
-            ?? throw new InvalidOperationException("The carrier could not create the listener.");
+        var director =
+            InteropListenerBase.CreateDirector(
+                (int)InteropEventPriority.Normal,
+                _mod,
+                (nint)(delegate* unmanaged<nint, nint, void>)&Trampoline.Invoke,
+                GCHandle.ToIntPtr(_self),
+                (nint)(delegate* unmanaged<nint, void>)&Trampoline.Release
+            ) ?? throw new InvalidOperationException("The carrier could not create the listener.");
 
         if (!bus.AddListener(director, _id))
         {
