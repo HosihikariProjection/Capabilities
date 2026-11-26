@@ -46,7 +46,7 @@ jobs:
         with:
           repository: HosihikariFramework/PluginAbstractions
           path: Plugin.Abstractions
-          ref: 59461a7d261050b82c43f009b062651050503984
+          ref: 82ae455f86d6435205d0dbf8f03a0b13024063ad
 
       - uses: actions/setup-dotnet@v4
         with:
