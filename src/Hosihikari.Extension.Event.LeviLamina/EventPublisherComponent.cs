@@ -187,8 +187,9 @@ internal sealed class LeviLaminaPlayerView(InteropServerPlayer player) : IPlayer
     // to be read more than once per dispatch.
     public string Name { get; } = player.AsPlayer()?.getRealName() ?? "";
 
-    // getXuid() is a pure virtual whose symbol the carrier never exports.
-    public string Xuid => "";
+    // getXuid() is a pure virtual with no exported symbol; `_getXuid` is the virtual mirror the
+    // surface emits for it (the `$` spelling, made identifier-safe).
+    public string Xuid { get; } = player.AsPlayer()?._getXuid() ?? "";
 
     public object NativeView => player;
 }

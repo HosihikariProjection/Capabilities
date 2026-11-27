@@ -13,8 +13,7 @@ public interface IPlayerView
     /// <summary>The player's Xbox user id, or an empty string when the carrier has none.</summary>
     /// <remarks>
     /// LeviLamina's <c>getXuid()</c> is a pure virtual whose symbol the carrier does not export,
-    /// so the LLAPI view always returns an empty string; match on <see cref="NativeView"/>'s
-    /// UUID or on <see cref="Name"/> there.
+    /// so the LLAPI view reaches it through the virtual mirror the surface exposes instead.
     /// </remarks>
     string Xuid { get; }
 
