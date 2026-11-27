@@ -13,6 +13,7 @@ using InteropEvent = Hosihikari.Binding.LeviLamina.Interop.ll.@event.Event;
 using InteropEventIdView = Hosihikari.Binding.LeviLamina.Interop.ll.@event.EventIdView;
 using InteropJoin = Hosihikari.Binding.LeviLamina.Interop.ll.@event.PlayerJoinEvent;
 using InteropNativeMod = Hosihikari.Binding.LeviLamina.Interop.ll.mod.NativeMod;
+using InteropServerPlayer = Hosihikari.Binding.LeviLamina.Interop.ServerPlayer;
 
 namespace Hosihikari.Extension.Event.LeviLamina;
 
@@ -175,18 +176,18 @@ public sealed class EventPublisherComponent : ICarrierComponent
 
 /// <summary>A player as the carrier sees it, valid only during the callback.</summary>
 /// <remarks>
-/// <c>ServerPlayerEvent::self()</c> answers a raw pointer: <c>ServerPlayer</c> and its
-/// <c>Player</c>/<c>Actor</c> bases are outside the projected LLAPI surface, so a reference
-/// return stays an opaque handle there. <see cref="Services"/> has the same shape for the same
-/// reason. What that leaves is a view with a handle and nothing to read off it — the identity
-/// members do exist in the carrier, they are just not reachable until the type is projected.
+/// <c>ServerPlayerEvent::self()</c> answers a borrowed <c>ServerPlayer</c>, live only for the
+/// callback. The identity members sit on its bases; <c>getNameTag()</c> on <c>Actor</c> is not
+/// exported, so the name is reached through <c>AsPlayer()</c> instead.
 /// </remarks>
-internal sealed class LeviLaminaPlayerView(nint player) : IPlayerView
+internal sealed class LeviLaminaPlayerView(InteropServerPlayer player) : IPlayerView
 {
-    // Not reachable through the handle: getNameTag() sits on Actor, which is not projected.
-    public string Name => "";
+    // getNameTag() sits on Actor and is not exported, so the name comes from the Player-level
+    // equivalent, which is. Resolved once: the downcast is a shim call, and the event is going
+    // to be read more than once per dispatch.
+    public string Name { get; } = player.AsPlayer()?.getRealName() ?? "";
 
-    // getXuid() is a pure virtual with no exported symbol even where Player is projected.
+    // getXuid() is a pure virtual whose symbol the carrier never exports.
     public string Xuid => "";
 
     public object NativeView => player;
