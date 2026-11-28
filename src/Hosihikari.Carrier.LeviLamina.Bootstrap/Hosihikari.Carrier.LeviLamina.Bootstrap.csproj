@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -23,18 +22,25 @@
   <ItemGroup>
     <ProjectReference Include="../Hosihikari.Carrier/Hosihikari.Carrier.csproj" />
     <ProjectReference Include="../Hosihikari.Carrier.LeviLamina/Hosihikari.Carrier.LeviLamina.csproj" />
-    <ProjectReference Include="$(PluginAbstractionsProjectPath)"
-                      Condition="'$(PluginAbstractionsProjectPath)' != ''" />
-    <ProjectReference Include="../../../../Framework/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj"
-                      Condition="'$(PluginAbstractionsProjectPath)' == ''" />
-    <ProjectReference Include="$(LeviLaminaIdiomaticProjectPath)"
-                      Condition="'$(LeviLaminaIdiomaticProjectPath)' != ''" />
-    <ProjectReference Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj"
-                      Condition="'$(LeviLaminaIdiomaticProjectPath)' == ''" />
+    <ProjectReference
+      Include="$(PluginAbstractionsProjectPath)"
+      Condition="'$(PluginAbstractionsProjectPath)' != ''"
+    />
+    <ProjectReference
+      Include="../../../../Framework/Plugin.Abstractions/src/Hosihikari.Plugin.Abstractions.csproj"
+      Condition="'$(PluginAbstractionsProjectPath)' == ''"
+    />
+    <ProjectReference
+      Include="$(LeviLaminaIdiomaticProjectPath)"
+      Condition="'$(LeviLaminaIdiomaticProjectPath)' != ''"
+    />
+    <ProjectReference
+      Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj"
+      Condition="'$(LeviLaminaIdiomaticProjectPath)' == ''"
+    />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
-
 </Project>

@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -17,5 +16,4 @@
     <ProjectReference Include="../../src/Hosihikari.Extension.Hook/Hosihikari.Extension.Hook.csproj" />
     <ProjectReference Include="../../src/Hosihikari.Extension.UI/Hosihikari.Extension.UI.csproj" />
   </ItemGroup>
-
 </Project>

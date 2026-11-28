@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -24,14 +23,17 @@
 
   <ItemGroup>
     <ProjectReference Include="../Hosihikari.Extension.Async/Hosihikari.Extension.Async.csproj" />
-    <ProjectReference Include="$(LeviLaminaIdiomaticProjectPath)"
-                      Condition="'$(LeviLaminaIdiomaticProjectPath)' != ''" />
-    <ProjectReference Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj"
-                      Condition="'$(LeviLaminaIdiomaticProjectPath)' == ''" />
+    <ProjectReference
+      Include="$(LeviLaminaIdiomaticProjectPath)"
+      Condition="'$(LeviLaminaIdiomaticProjectPath)' != ''"
+    />
+    <ProjectReference
+      Include="../../../Binding.Idiomatic/src/Hosihikari.Binding.LeviLamina/Hosihikari.Binding.LeviLamina.csproj"
+      Condition="'$(LeviLaminaIdiomaticProjectPath)' == ''"
+    />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
-
 </Project>
