@@ -7,4 +7,5 @@ namespace Hosihikari.Extension.UI;
 public sealed record ActionFormDefinition(
     string Title,
     string Content,
-    IReadOnlyList<ActionButtonDefinition> Buttons);
+    IReadOnlyList<ActionButtonDefinition> Buttons
+);

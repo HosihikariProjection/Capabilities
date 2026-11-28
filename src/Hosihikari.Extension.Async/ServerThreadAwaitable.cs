@@ -18,8 +18,6 @@ public readonly struct ServerThreadAwaitable
         public void OnCompleted(Action continuation) => AsyncExtension.Service.Post(continuation);
 
         /// <summary>Nothing to observe.</summary>
-        public void GetResult()
-        {
-        }
+        public void GetResult() { }
     }
 }

@@ -31,7 +31,9 @@ public sealed class EndstoneAsyncService : IAsyncService
     public Task RunAsync(Action work)
     {
         ArgumentNullException.ThrowIfNull(work);
-        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var completion = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously
+        );
         Executor.Post(() =>
         {
             try

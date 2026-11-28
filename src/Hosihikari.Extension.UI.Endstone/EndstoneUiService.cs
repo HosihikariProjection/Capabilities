@@ -16,7 +16,8 @@ public sealed class EndstoneUiService : IUiService
         IPlayerView player,
         ActionFormDefinition form,
         Action<ActionFormResponse>? onSubmit = null,
-        Action? onClose = null)
+        Action? onClose = null
+    )
     {
         ArgumentNullException.ThrowIfNull(player);
         ArgumentNullException.ThrowIfNull(form);
@@ -24,7 +25,9 @@ public sealed class EndstoneUiService : IUiService
         if (player.NativeView is not Player native)
         {
             throw new ArgumentException(
-                "The player view was not created by the Endstone adapter.", nameof(player));
+                "The player view was not created by the Endstone adapter.",
+                nameof(player)
+            );
         }
 
         var scope = BindingScope.For(typeof(EndstoneUiService).Assembly);
@@ -36,7 +39,8 @@ public sealed class EndstoneUiService : IUiService
             nativeForm.AddButton(
                 button.Text,
                 button.Icon,
-                _ => onSubmit?.Invoke(new ActionFormResponse(clicked)));
+                _ => onSubmit?.Invoke(new ActionFormResponse(clicked))
+            );
         }
 
         if (onClose is not null)

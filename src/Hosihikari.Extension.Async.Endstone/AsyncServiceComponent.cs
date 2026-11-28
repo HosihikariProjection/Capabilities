@@ -2,8 +2,8 @@ using Hosihikari.Binding;
 using Hosihikari.Binding.Endstone;
 using Hosihikari.Carrier;
 using Hosihikari.Carrier.Endstone;
-using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
 using Microsoft.Extensions.Logging;
+using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
 
 namespace Hosihikari.Extension.Async.Endstone;
 
@@ -30,7 +30,10 @@ public sealed class AsyncServiceComponent : ICarrierComponent
     public ValueTask StartAsync(ICarrierComponentContext context, CancellationToken token)
     {
         ArgumentNullException.ThrowIfNull(context);
-        if (context.CarrierServices.GetService(typeof(ICarrierHost)) is not ICarrierHost { Plugin: not 0 } host)
+        if (
+            context.CarrierServices.GetService(typeof(ICarrierHost))
+            is not ICarrierHost { Plugin: not 0 } host
+        )
         {
             return ValueTask.CompletedTask;
         }

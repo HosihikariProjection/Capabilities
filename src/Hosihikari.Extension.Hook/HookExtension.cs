@@ -80,8 +80,8 @@ public static class HookExtension
         nint target,
         nint detour,
         HookPriority priority = HookPriority.Normal,
-        bool suspendThreads = true) =>
-        Service.Attach(target, detour, priority, suspendThreads);
+        bool suspendThreads = true
+    ) => Service.Attach(target, detour, priority, suspendThreads);
 
     /// <summary>Registers the adapter for the running carrier.</summary>
     /// <remarks>Called by an adapter's module initializer; plugins never call it.</remarks>

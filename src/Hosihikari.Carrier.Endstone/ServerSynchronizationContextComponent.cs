@@ -1,8 +1,8 @@
 using Hosihikari.Binding;
 using Hosihikari.Binding.Endstone;
-using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
-using Microsoft.Extensions.Logging;
 using Hosihikari.Carrier;
+using Microsoft.Extensions.Logging;
+using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
 
 namespace Hosihikari.Carrier.Endstone;
 
@@ -23,10 +23,15 @@ public sealed class ServerSynchronizationContextComponent : ICarrierComponent
         ArgumentNullException.ThrowIfNull(context);
         if (_context is not null)
         {
-            throw new InvalidOperationException("The synchronization context is already installed.");
+            throw new InvalidOperationException(
+                "The synchronization context is already installed."
+            );
         }
 
-        if (context.CarrierServices.GetService(typeof(ICarrierHost)) is not ICarrierHost { Plugin: not 0 } host)
+        if (
+            context.CarrierServices.GetService(typeof(ICarrierHost))
+            is not ICarrierHost { Plugin: not 0 } host
+        )
         {
             return ValueTask.CompletedTask;
         }
@@ -35,7 +40,8 @@ public sealed class ServerSynchronizationContextComponent : ICarrierComponent
         var plugin = Plugin.From(InteropPlugin.Borrow(host.Plugin), scope);
         _context = ServerSynchronizationContext.Install(
             new ServerExecutor(plugin),
-            exception => context.Logger.LogError(exception, "A server-thread continuation threw."));
+            exception => context.Logger.LogError(exception, "A server-thread continuation threw.")
+        );
         return ValueTask.CompletedTask;
     }
 

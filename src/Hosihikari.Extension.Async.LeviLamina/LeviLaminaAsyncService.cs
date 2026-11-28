@@ -13,7 +13,8 @@ public sealed class LeviLaminaAsyncService : IAsyncService
     public bool IsAvailable => true;
 
     /// <inheritdoc/>
-    public bool HasSynchronizationContext => SynchronizationContext.Current is ServerSynchronizationContext;
+    public bool HasSynchronizationContext =>
+        SynchronizationContext.Current is ServerSynchronizationContext;
 
     /// <inheritdoc/>
     public void Post(Action work)
@@ -26,7 +27,9 @@ public sealed class LeviLaminaAsyncService : IAsyncService
     public Task RunAsync(Action work)
     {
         ArgumentNullException.ThrowIfNull(work);
-        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var completion = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously
+        );
         _executor.Post(() =>
         {
             try

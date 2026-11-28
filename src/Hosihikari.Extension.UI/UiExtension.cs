@@ -79,8 +79,8 @@ public static class UiExtension
         IPlayerView player,
         ActionFormDefinition form,
         Action<ActionFormResponse>? onSubmit = null,
-        Action? onClose = null) =>
-        Service.ShowActionForm(player, form, onSubmit, onClose);
+        Action? onClose = null
+    ) => Service.ShowActionForm(player, form, onSubmit, onClose);
 
     /// <summary>Registers the adapter for the running carrier.</summary>
     /// <remarks>Called by an adapter's module initializer; plugins never call it.</remarks>

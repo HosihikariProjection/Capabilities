@@ -3,11 +3,11 @@ using Hosihikari.Binding.Endstone;
 using Hosihikari.Carrier;
 using Hosihikari.Carrier.Endstone;
 using Hosihikari.Extension.Abstractions;
-using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
 using Microsoft.Extensions.Logging;
 using ContractChat = Hosihikari.Extension.Event.PlayerChatEvent;
 using ContractJoin = Hosihikari.Extension.Event.PlayerJoinEvent;
 using ContractLeave = Hosihikari.Extension.Event.PlayerLeaveEvent;
+using InteropPlugin = Hosihikari.Binding.Endstone.Interop.endstone.Plugin;
 using NativeEvent = Hosihikari.Binding.Endstone.Event;
 
 namespace Hosihikari.Extension.Event.Endstone;
@@ -43,7 +43,10 @@ public sealed class EventPublisherComponent : ICarrierComponent
             throw new InvalidOperationException("The event publisher is already started.");
         }
 
-        if (context.CarrierServices.GetService(typeof(ICarrierHost)) is not ICarrierHost { Plugin: not 0 } host)
+        if (
+            context.CarrierServices.GetService(typeof(ICarrierHost))
+            is not ICarrierHost { Plugin: not 0 } host
+        )
         {
             return ValueTask.CompletedTask;
         }

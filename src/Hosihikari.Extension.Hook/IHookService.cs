@@ -15,5 +15,10 @@ public interface IHookService
     /// <param name="detour">The function to run instead.</param>
     /// <param name="priority">Order among hooks on the same target.</param>
     /// <param name="suspendThreads">Whether to pause threads while patching, when the carrier can.</param>
-    IHook Attach(nint target, nint detour, HookPriority priority = HookPriority.Normal, bool suspendThreads = true);
+    IHook Attach(
+        nint target,
+        nint detour,
+        HookPriority priority = HookPriority.Normal,
+        bool suspendThreads = true
+    );
 }

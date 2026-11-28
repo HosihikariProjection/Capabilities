@@ -42,23 +42,46 @@ Check("hook starts unavailable", !HookExtension.IsAvailable);
 Check("ui starts unavailable", !UiExtension.IsAvailable);
 
 // The unavailable path is loud and names the capability.
-Check("async service throws", Throws<CarrierCapabilityUnavailableException>(() => _ = AsyncExtension.Service));
-Check("async post throws", Throws<CarrierCapabilityUnavailableException>(() => AsyncExtension.Post(() => { })));
-Check("async run throws", Throws<CarrierCapabilityUnavailableException>(() => AsyncExtension.RunAsync(() => { })));
-Check("hook service throws", Throws<CarrierCapabilityUnavailableException>(() => _ = HookExtension.Service));
-Check("hook attach throws", Throws<CarrierCapabilityUnavailableException>(() => HookExtension.Attach(0x1000, 0x2000)));
-Check("ui service throws", Throws<CarrierCapabilityUnavailableException>(() => _ = UiExtension.Service));
+Check(
+    "async service throws",
+    Throws<CarrierCapabilityUnavailableException>(() => _ = AsyncExtension.Service)
+);
+Check(
+    "async post throws",
+    Throws<CarrierCapabilityUnavailableException>(() => AsyncExtension.Post(() => { }))
+);
+Check(
+    "async run throws",
+    Throws<CarrierCapabilityUnavailableException>(() => AsyncExtension.RunAsync(() => { }))
+);
+Check(
+    "hook service throws",
+    Throws<CarrierCapabilityUnavailableException>(() => _ = HookExtension.Service)
+);
+Check(
+    "hook attach throws",
+    Throws<CarrierCapabilityUnavailableException>(() => HookExtension.Attach(0x1000, 0x2000))
+);
+Check(
+    "ui service throws",
+    Throws<CarrierCapabilityUnavailableException>(() => _ = UiExtension.Service)
+);
 Check(
     "ui show throws",
-    Throws<CarrierCapabilityUnavailableException>(
-        () => UiExtension.ShowActionForm(new FakePlayer(), new ActionFormDefinition("t", "c", []))));
+    Throws<CarrierCapabilityUnavailableException>(() =>
+        UiExtension.ShowActionForm(new FakePlayer(), new ActionFormDefinition("t", "c", []))
+    )
+);
 
 // The same exception type is what a carrier that lacks a named capability reports.
 var unavailable = new CarrierCapabilityUnavailableException("Command", "Endstone");
 Check("exception is a NotSupportedException", unavailable is NotSupportedException);
 Check("exception keeps the capability", unavailable.Capability == "Command");
 Check("exception keeps the carrier", unavailable.Carrier == "Endstone");
-Check("exception names both", unavailable.Message.Contains("Command") && unavailable.Message.Contains("Endstone"));
+Check(
+    "exception names both",
+    unavailable.Message.Contains("Command") && unavailable.Message.Contains("Endstone")
+);
 
 // Event shapes: cancellation and the writable chat message are the plugin-facing contract.
 var chat = new PlayerChatEvent(new FakePlayer(), "hello");
@@ -69,10 +92,22 @@ Check("chat message is writable", chat.Message == "edited");
 chat.Cancel();
 Check("chat cancels", chat.IsCancelled);
 Check("chat rejects a null message", Throws<ArgumentNullException>(() => chat.Message = null!));
-Check("chat rejects a null player", Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, "m")));
-Check("chat rejects a null initial message", Throws<ArgumentNullException>(() => new PlayerChatEvent(new FakePlayer(), null!)));
-Check("join rejects a null player", Throws<ArgumentNullException>(() => new PlayerJoinEvent(null!)));
-Check("leave rejects a null player", Throws<ArgumentNullException>(() => new PlayerLeaveEvent(null!)));
+Check(
+    "chat rejects a null player",
+    Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, "m"))
+);
+Check(
+    "chat rejects a null initial message",
+    Throws<ArgumentNullException>(() => new PlayerChatEvent(new FakePlayer(), null!))
+);
+Check(
+    "join rejects a null player",
+    Throws<ArgumentNullException>(() => new PlayerJoinEvent(null!))
+);
+Check(
+    "leave rejects a null player",
+    Throws<ArgumentNullException>(() => new PlayerLeaveEvent(null!))
+);
 Check("join keeps its player", new PlayerJoinEvent(new FakePlayer()).Player.Name == "Steve");
 
 // The carrier marks the event capability available once its listeners are attached.
@@ -90,7 +125,10 @@ AsyncExtension.Post(() => posted++);
 Check("post reaches the service", posted == 1);
 
 var fault = AsyncExtension.RunAsync(() => throw new InvalidOperationException("boom"));
-Check("run surfaces the work's exception", fault.IsFaulted && fault.Exception!.InnerException!.Message == "boom");
+Check(
+    "run surfaces the work's exception",
+    fault.IsFaulted && fault.Exception!.InnerException!.Message == "boom"
+);
 
 // The awaitable always yields and posts its continuation to the server thread.
 var awaiter = AsyncExtension.SwitchToServerThread().GetAwaiter();
@@ -123,7 +161,8 @@ Check("ui is available after Use", UiExtension.IsAvailable);
 var form = new ActionFormDefinition(
     "Pick",
     "Choose one",
-    [new ActionButtonDefinition("One"), new ActionButtonDefinition("Two", "textures/items/apple")]);
+    [new ActionButtonDefinition("One"), new ActionButtonDefinition("Two", "textures/items/apple")]
+);
 ActionFormResponse? chosen = null;
 var closed = false;
 var player = new FakePlayer();
@@ -188,7 +227,12 @@ sealed class FakeHookService : IHookService
 
     public bool IsAvailable => true;
 
-    public IHook Attach(nint target, nint detour, HookPriority priority = HookPriority.Normal, bool suspendThreads = true)
+    public IHook Attach(
+        nint target,
+        nint detour,
+        HookPriority priority = HookPriority.Normal,
+        bool suspendThreads = true
+    )
     {
         Target = target;
         Detour = detour;
@@ -227,7 +271,8 @@ sealed class FakeUiService : IUiService
         IPlayerView player,
         ActionFormDefinition form,
         Action<ActionFormResponse>? onSubmit = null,
-        Action? onClose = null)
+        Action? onClose = null
+    )
     {
         Player = player;
         Form = form;

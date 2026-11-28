@@ -1,7 +1,7 @@
 using System.IO;
+using Hosihikari.Carrier;
 using Microsoft.Extensions.DependencyInjection;
 using InteropNativeMethods = Hosihikari.Binding.Endstone.Interop.NativeMethods;
-using Hosihikari.Carrier;
 
 namespace Hosihikari.Carrier.Endstone.Bootstrap;
 
@@ -27,12 +27,16 @@ public sealed class EndstoneCarrierServicesConfigurator : ICarrierServicesConfig
         {
             throw new FileNotFoundException(
                 $"The carrier package at {context.CarrierDirectory} does not contain {name}.",
-                path);
+                path
+            );
         }
 
         Load(path);
 
-        context.Services.AddSingleton(typeof(ICarrierHost), new EndstoneCarrierHost(context.HostHandle));
+        context.Services.AddSingleton(
+            typeof(ICarrierHost),
+            new EndstoneCarrierHost(context.HostHandle)
+        );
     }
 
     /// <summary>The shim as the runtime packages it, per platform.</summary>
@@ -41,9 +45,10 @@ public sealed class EndstoneCarrierServicesConfigurator : ICarrierServicesConfig
     /// Linux one is a version-less .so. Renaming either to a single spelling would make every
     /// build and packaging rule disagree with what the loader actually produced.
     /// </remarks>
-    private static string ShimFile => OperatingSystem.IsWindows()
-        ? "Hosihikari.Binding.Endstone.Shim.dll"
-        : "libHosihikari.Binding.Endstone.Shim.so";
+    private static string ShimFile =>
+        OperatingSystem.IsWindows()
+            ? "Hosihikari.Binding.Endstone.Shim.dll"
+            : "libHosihikari.Binding.Endstone.Shim.so";
 
     /// <summary>Loads one shim; the binding library keeps its own handle.</summary>
     private static void Load(string path) => InteropNativeMethods.Load(path);

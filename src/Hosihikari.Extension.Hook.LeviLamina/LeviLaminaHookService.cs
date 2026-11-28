@@ -15,8 +15,8 @@ public sealed class LeviLaminaHookService : IHookService
         nint target,
         nint detour,
         HookPriority priority = HookPriority.Normal,
-        bool suspendThreads = true) =>
-        new HookToken(HostHook.Attach(target, detour, (HostPriority)priority, suspendThreads));
+        bool suspendThreads = true
+    ) => new HookToken(HostHook.Attach(target, detour, (HostPriority)priority, suspendThreads));
 }
 
 internal sealed class HookToken(HostHook hook) : IHook

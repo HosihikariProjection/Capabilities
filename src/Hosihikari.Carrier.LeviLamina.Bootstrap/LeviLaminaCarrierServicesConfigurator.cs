@@ -1,15 +1,16 @@
 using System.IO;
+using Hosihikari.Carrier;
 using Microsoft.Extensions.DependencyInjection;
 using InteropNativeMethods = Hosihikari.Binding.LeviLamina.Interop.NativeMethods;
-using Hosihikari.Carrier;
 
 namespace Hosihikari.Carrier.LeviLamina.Bootstrap;
 
 /// <summary>Registers the LeviLamina carrier host before any component starts.</summary>
 /// <remarks>
-/// LeviLamina has no host plugin object to hand over, so the registered handle is zero and the
-/// components never look at it. The real work is loading the binding shim from the carrier
-/// package so the binding types resolve.
+/// The real work is loading the binding shim from the carrier package so the binding types
+/// resolve. The host handle is the carrier mod's own module handle, which the native side
+/// passes down: LeviLamina resolves a listener's owning mod from it, and a director created
+/// without it carries no mod at all, so the native side would refuse every listener.
 /// </remarks>
 public sealed class LeviLaminaCarrierServicesConfigurator : ICarrierServicesConfigurator
 {
@@ -25,19 +26,20 @@ public sealed class LeviLaminaCarrierServicesConfigurator : ICarrierServicesConf
             // far from the actual cause.
             throw new FileNotFoundException(
                 $"The carrier package at {context.CarrierDirectory} does not contain {ShimFile}.",
-                path);
+                path
+            );
         }
 
         InteropNativeMethods.Load(path);
-        context.Services.AddSingleton(typeof(ICarrierHost), new LeviLaminaCarrierHost());
+        context.Services.AddSingleton(typeof(ICarrierHost), new LeviLaminaCarrierHost(context.HostHandle));
     }
 
     private const string ShimFile = "Hosihikari.Binding.LeviLamina.Shim.dll";
 }
 
-/// <summary>The host handle for LeviLamina: always zero.</summary>
-public sealed class LeviLaminaCarrierHost : ICarrierHost
+/// <summary>The host handle for LeviLamina: the carrier mod's module handle.</summary>
+public sealed class LeviLaminaCarrierHost(nint modHandle) : ICarrierHost
 {
     /// <inheritdoc/>
-    public nint Plugin => 0;
+    public nint Plugin => modHandle;
 }

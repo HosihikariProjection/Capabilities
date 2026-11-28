@@ -17,5 +17,6 @@ public interface IUiService
         IPlayerView player,
         ActionFormDefinition form,
         Action<ActionFormResponse>? onSubmit = null,
-        Action? onClose = null);
+        Action? onClose = null
+    );
 }

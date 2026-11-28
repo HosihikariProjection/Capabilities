@@ -19,12 +19,15 @@ public sealed class ServerSynchronizationContextComponent : ICarrierComponent
         ArgumentNullException.ThrowIfNull(context);
         if (_context is not null)
         {
-            throw new InvalidOperationException("The synchronization context is already installed.");
+            throw new InvalidOperationException(
+                "The synchronization context is already installed."
+            );
         }
 
         _context = ServerSynchronizationContext.Install(
             new ServerExecutor(),
-            exception => context.Logger.LogError(exception, "A server-thread continuation threw."));
+            exception => context.Logger.LogError(exception, "A server-thread continuation threw.")
+        );
         return ValueTask.CompletedTask;
     }
 

@@ -44,7 +44,8 @@ public sealed class PluginEnableGate : IDisposable
         Plugin plugin,
         Action onEnabled,
         ILogger? logger = null,
-        TimeSpan? timeout = null)
+        TimeSpan? timeout = null
+    )
     {
         ArgumentNullException.ThrowIfNull(plugin);
         ArgumentNullException.ThrowIfNull(onEnabled);
@@ -58,10 +59,19 @@ public sealed class PluginEnableGate : IDisposable
         // Generous on purpose: the wait spans the carrier's whole startup. A server with a large
         // world loads for well over a minute before plugins are enabled, and giving up early
         // leaves the capability dead for the rest of the session — far worse than a late start.
-        var gate = new PluginEnableGate(plugin, onEnabled, logger, timeout ?? TimeSpan.FromMinutes(5));
+        var gate = new PluginEnableGate(
+            plugin,
+            onEnabled,
+            logger,
+            timeout ?? TimeSpan.FromMinutes(5)
+        );
 
-        gate._timer = new Timer(static state => ((PluginEnableGate)state!).Poll(), gate,
-            PollInterval, PollInterval);
+        gate._timer = new Timer(
+            static state => ((PluginEnableGate)state!).Poll(),
+            gate,
+            PollInterval,
+            PollInterval
+        );
         CarrierEnableSignal.Subscribe(gate.OnCarrierEnabled);
 
         // The signal may have been raised between the isEnabled check above and this
@@ -139,7 +149,8 @@ public sealed class PluginEnableGate : IDisposable
                 Dispose();
                 _logger?.LogError(
                     "The host plugin was not enabled within {Seconds}s; the deferred start is abandoned.",
-                    _timeout.TotalSeconds);
+                    _timeout.TotalSeconds
+                );
             }
 
             return;
@@ -195,7 +206,10 @@ public sealed class PluginEnableGate : IDisposable
         }
         catch (Exception exception)
         {
-            _logger?.LogError(exception, "The deferred start could not be scheduled on the server thread.");
+            _logger?.LogError(
+                exception,
+                "The deferred start could not be scheduled on the server thread."
+            );
         }
     }
 
